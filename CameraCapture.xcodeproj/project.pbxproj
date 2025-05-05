@@ -6,6 +6,16 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		64AD0E0F2DC8051B0078838B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 64AD0E0E2DC8051B0078838B /* FirebaseAnalytics */; };
+		64AD0E112DC8051B0078838B /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 64AD0E102DC8051B0078838B /* FirebaseAnalyticsOnDeviceConversion */; };
+		64AD0E132DC8051B0078838B /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 64AD0E122DC8051B0078838B /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		64AD0E152DC8051B0078838B /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 64AD0E142DC8051B0078838B /* FirebaseAppCheck */; };
+		64AD0E172DC8051B0078838B /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 64AD0E162DC8051B0078838B /* FirebaseAppDistribution-Beta */; };
+		64AD0E1B2DC806580078838B /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 64AD0E1A2DC806580078838B /* FirebaseDatabase */; };
+		64B274B32DC801BF00867B74 /* WebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = 64B274B22DC801BF00867B74 /* WebRTC */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		641EC4DD2DC4F88D00374C39 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -65,6 +75,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64AD0E0F2DC8051B0078838B /* FirebaseAnalytics in Frameworks */,
+				64AD0E112DC8051B0078838B /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
+				64B274B32DC801BF00867B74 /* WebRTC in Frameworks */,
+				64AD0E152DC8051B0078838B /* FirebaseAppCheck in Frameworks */,
+				64AD0E132DC8051B0078838B /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				64AD0E1B2DC806580078838B /* FirebaseDatabase in Frameworks */,
+				64AD0E172DC8051B0078838B /* FirebaseAppDistribution-Beta in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,8 +141,6 @@
 				641EC4C82DC4F88C00374C39 /* CameraCapture */,
 			);
 			name = CameraCapture;
-			packageProductDependencies = (
-			);
 			productName = CameraCapture;
 			productReference = 641EC4C62DC4F88C00374C39 /* CameraCapture.app */;
 			productType = "com.apple.product-type.application";
@@ -147,8 +162,6 @@
 				641EC4DF2DC4F88D00374C39 /* CameraCaptureTests */,
 			);
 			name = CameraCaptureTests;
-			packageProductDependencies = (
-			);
 			productName = CameraCaptureTests;
 			productReference = 641EC4DC2DC4F88D00374C39 /* CameraCaptureTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -170,8 +183,6 @@
 				641EC4E92DC4F88D00374C39 /* CameraCaptureUITests */,
 			);
 			name = CameraCaptureUITests;
-			packageProductDependencies = (
-			);
 			productName = CameraCaptureUITests;
 			productReference = 641EC4E62DC4F88D00374C39 /* CameraCaptureUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -208,6 +219,10 @@
 			);
 			mainGroup = 641EC4BD2DC4F88C00374C39;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				64B274B12DC801BF00867B74 /* XCRemoteSwiftPackageReference "WebRTC" */,
+				64B274B62DC8041E00867B74 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 641EC4C72DC4F88C00374C39 /* Products */;
 			projectDirPath = "";
@@ -289,6 +304,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PU2S55T4G4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CameraCapture/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -316,6 +332,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PU2S55T4G4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CameraCapture/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -563,6 +580,63 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		64B274B12DC801BF00867B74 /* XCRemoteSwiftPackageReference "WebRTC" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stasel/WebRTC.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 135.0.0;
+			};
+		};
+		64B274B62DC8041E00867B74 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.12.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		64AD0E0E2DC8051B0078838B /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 64B274B62DC8041E00867B74 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		64AD0E102DC8051B0078838B /* FirebaseAnalyticsOnDeviceConversion */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 64B274B62DC8041E00867B74 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsOnDeviceConversion;
+		};
+		64AD0E122DC8051B0078838B /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 64B274B62DC8041E00867B74 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
+		};
+		64AD0E142DC8051B0078838B /* FirebaseAppCheck */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 64B274B62DC8041E00867B74 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAppCheck;
+		};
+		64AD0E162DC8051B0078838B /* FirebaseAppDistribution-Beta */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 64B274B62DC8041E00867B74 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseAppDistribution-Beta";
+		};
+		64AD0E1A2DC806580078838B /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 64B274B62DC8041E00867B74 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		64B274B22DC801BF00867B74 /* WebRTC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 64B274B12DC801BF00867B74 /* XCRemoteSwiftPackageReference "WebRTC" */;
+			productName = WebRTC;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 641EC4BE2DC4F88C00374C39 /* Project object */;
 }
