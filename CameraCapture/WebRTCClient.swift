@@ -26,17 +26,29 @@ final class WebRTCClient: NSObject, RTCPeerConnectionDelegate {
 
     private func setupPeerConnection() {
         let config = RTCConfiguration()
-        config.iceServers = [RTCIceServer(urlStrings: ["stun:stun.l.google.com:19302"])]
-        let constraints = RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil)
-        peerConnection = factory.peerConnection(with: config, constraints: constraints, delegate: self)
+        config.sdpSemantics = .unifiedPlan
+
+        config.iceServers = [
+            RTCIceServer(
+                urlStrings: ["stun:stun.l.google.com:19302"]
+            ),
+            RTCIceServer(
+                urlStrings: ["turn:numb.viagenie.ca"],
+                username: "webrtc@live.com", // public
+                credential: "muazkh"         // public
+            )
+        ]
+
+            let constraints = RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil)
+            peerConnection = factory.peerConnection(with: config, constraints: constraints, delegate: self)
 
         let videoSource = factory.videoSource()
         localVideoTrack = factory.videoTrack(with: videoSource, trackId: "video0")
 
         if let videoTrack = localVideoTrack {
-            print("📡 Adaug localVideoTrack în peerConnection")
-            _ = peerConnection?.add(videoTrack, streamIds: ["stream"])
-            videoTrack.add(localRenderer)
+            let transceiverInit = RTCRtpTransceiverInit()
+            transceiverInit.direction = .sendRecv
+            peerConnection?.addTransceiver(with: videoTrack, init: transceiverInit)
         }
 
         videoCapturer = RTCCameraVideoCapturer(delegate: videoSource)
@@ -93,7 +105,13 @@ final class WebRTCClient: NSObject, RTCPeerConnectionDelegate {
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange stateChanged: RTCSignalingState) {}
     func peerConnection(_ peerConnection: RTCPeerConnection, didRemove stream: RTCMediaStream) {}
     func peerConnectionShouldNegotiate(_ peerConnection: RTCPeerConnection) {}
-    func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceConnectionState) {}
+    
+    
+    func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceConnectionState) {
+        print("🌍 ICE connection state: \(newState.rawValue)")
+    }
+    
+    
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceGatheringState) {}
     func peerConnection(_ peerConnection: RTCPeerConnection, didGenerate candidate: RTCIceCandidate) {
         self.onLocalICECandidate?(candidate)

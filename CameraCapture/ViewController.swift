@@ -6,8 +6,8 @@ class ViewController: UIViewController {
     private var webRTCClient: WebRTCClient!
     private var signalingClient: SignalingClient!
 
-    private let localID = "callee"      // sau "callee"
-    private let remoteID = "caller"     // sau "caller"
+    private var localID: String = ""
+    private var remoteID: String = ""
 
     private var remoteView: RTCMTLVideoView!
     private var localView: RTCMTLVideoView!
@@ -16,7 +16,48 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .black
 
-        // 1. Inițializează view-urile video
+        // Afișează UI de alegere
+        showRoleSelectionUI()
+    }
+
+    private func showRoleSelectionUI() {
+        let callerButton = UIButton(type: .system)
+        callerButton.setTitle("Start as Caller", for: .normal)
+        callerButton.titleLabel?.font = .boldSystemFont(ofSize: 20)
+        callerButton.addTarget(self, action: #selector(startAsCaller), for: .touchUpInside)
+        callerButton.frame = CGRect(x: 50, y: 200, width: view.bounds.width - 100, height: 60)
+        callerButton.backgroundColor = .systemGreen
+        callerButton.setTitleColor(.white, for: .normal)
+        callerButton.layer.cornerRadius = 10
+        view.addSubview(callerButton)
+
+        let calleeButton = UIButton(type: .system)
+        calleeButton.setTitle("Start as Callee", for: .normal)
+        calleeButton.titleLabel?.font = .boldSystemFont(ofSize: 20)
+        calleeButton.addTarget(self, action: #selector(startAsCallee), for: .touchUpInside)
+        calleeButton.frame = CGRect(x: 50, y: 300, width: view.bounds.width - 100, height: 60)
+        calleeButton.backgroundColor = .systemBlue
+        calleeButton.setTitleColor(.white, for: .normal)
+        calleeButton.layer.cornerRadius = 10
+        view.addSubview(calleeButton)
+    }
+
+    @objc private func startAsCaller() {
+        localID = "caller"
+        remoteID = "callee"
+        startCall()
+    }
+
+    @objc private func startAsCallee() {
+        localID = "callee"
+        remoteID = "caller"
+        startCall()
+    }
+
+    private func startCall() {
+        view.subviews.forEach { $0.removeFromSuperview() } // curăță UI
+
+        // Inițializează view-urile video
         remoteView = RTCMTLVideoView(frame: view.bounds)
         remoteView.videoContentMode = .scaleAspectFill
         remoteView.backgroundColor = .black
@@ -28,24 +69,23 @@ class ViewController: UIViewController {
         view.addSubview(localView)
         view.bringSubviewToFront(localView)
 
-        // 2. Inițializează WebRTC și Firebase Signaling
+        // Inițializează WebRTC și Firebase Signaling
         webRTCClient = WebRTCClient(localRenderer: localView, remoteRenderer: remoteView)
         signalingClient = SignalingClient()
 
-        // 3. Pornește capturarea camerei locale
         webRTCClient.startCaptureLocalVideo()
 
-        // 4. Trimite SDP local
+        // Trimite SDP când e pregătit
         webRTCClient.onLocalSDPReady = { [weak self] sdp in
             self?.signalingClient.send(sdp: sdp, from: self?.localID ?? "")
         }
 
-        // 5. Trimite ICE local
+        // Trimite ICE local
         webRTCClient.onLocalICECandidate = { [weak self] candidate in
             self?.signalingClient.send(candidate: candidate, from: self?.localID ?? "")
         }
 
-        // 6. Ascultă SDP de la peer
+        // Ascultă SDP de la peer
         signalingClient.observeSDP(for: remoteID) { [weak self] remoteSDP in
             self?.webRTCClient.setRemoteDescription(remoteSDP)
 
@@ -56,12 +96,12 @@ class ViewController: UIViewController {
             }
         }
 
-        // 7. Ascultă ICE Candidates de la peer
+        // Ascultă ICE Candidates de la peer
         signalingClient.observeCandidates(for: remoteID) { [weak self] candidate in
             self?.webRTCClient.addRemoteICECandidate(candidate)
         }
 
-        // 8. Dacă suntem initiator, facem oferta
+        // Dacă suntem initiator, trimitem oferta
         if localID == "caller" {
             webRTCClient.offer { offer in
                 self.signalingClient.send(sdp: offer, from: self.localID)
